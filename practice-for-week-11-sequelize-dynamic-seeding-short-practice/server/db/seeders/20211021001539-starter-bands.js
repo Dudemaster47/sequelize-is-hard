@@ -22,7 +22,7 @@ module.exports = {
      * }], {});
     */
    
-    await queryInterface.bulkInsert('Bands', bands)
+    // await queryInterface.bulkInsert('Bands', bands)
   },
 
   down: async (queryInterface, Sequelize) => {

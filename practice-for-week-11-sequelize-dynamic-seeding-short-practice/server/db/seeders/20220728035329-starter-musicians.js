@@ -47,25 +47,29 @@ module.exports = {
     
     for(let b = 0; b < bandMusicians.length; b++){
       const {name, musicians} = bandMusicians[b];
-      const band = await Band.findAll({Where: name});
+      const band = await Band.create({name});
 
         for(let m = 0; m < musicians.length; m++){
           const musician = musicians[m];
-          await Band.addMusician({...musician, bandId: band.id});
+          await band.createMusician({...musician, bandId: band.id});
         }
     }
   },
 
   down: async (queryInterface, Sequelize) => {
     
-    for (let b = 0; b < bandMusicians.length; b++) {
-      const { name, musicians } = bandMusicians[b];
-      const band = await Band.findOne({ where: { name } });
+    // for (let b = 0; b < bandMusicians.length; b++) {
+    //   const { name, musicians } = bandMusicians[b];
+    //   const band = await Band.findOne({ where: { name } });
 
-      for (let m = 0; m < musicians.length; m++) {
-        const musician = musicians[m];
-        await Musician.destroy({ where: { ...musician, bandId: band.id } });
-      }
+    //   for (let m = 0; m < musicians.length; m++) {
+    //     const musician = musicians[m];
+    //     await Musician.destroy({ where: { ...musician, bandId: band.id } });
+    //   }
+    // }
+    const bands = await Band.findAll();
+    for (let band of bands){
+      await band.destroy();
     }
   }
 };
